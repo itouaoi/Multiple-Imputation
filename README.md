@@ -1,3 +1,5 @@
+![Multiple Imputation with mice (1)](https://user-images.githubusercontent.com/82706937/173537803-5d7c15a9-99ce-4fd8-b522-eed20b88efb6.png)
+
 # miceを用いた欠損値の多重代入法の実践
 Rのmiceパッケージを用いた、マルコフ連鎖モンテカルロ法による多重代入法について説明します。ここで示すコードは、それぞれ以下のファイルにも収納してあります。  
 + mi_cross: 横断データに対する多重代入（シングルレベル）
