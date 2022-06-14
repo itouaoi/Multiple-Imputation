@@ -7,7 +7,7 @@ Rのmiceパッケージを用いた欠損値の多重代入法について説明
 + mi_long : 応用編「マルチレベルの多重代入法」
 
 ## miceインストールと読み込み  
-```{r}
+```r
 install.packages("mice"); install.packages("broom.mixed")
 library(mice); library(broom.mixed)
 ```
@@ -16,7 +16,7 @@ library(mice); library(broom.mixed)
 `mice`パッケージを使えば、欠損値に対する多重代入法を以下のような数行のコードで実行することができます。  
 しかし、データに含まれる変数の種類や分布の形によって適切な多重代入の方法が異なるため、**使用するデータに合わせてカスタマイズする必要があります。**  
 
-```{r}
+```r
 #Basic workflow with mice
 imp <- mice(nhanes)             #Imputation
 fit <- with(imp, lm(chl ~ bmi + age)) #Analysis
@@ -28,17 +28,17 @@ summary(res)
 
 # 基本編「シングルレベルの多重代入法」
 
-## データの要約と分布の確認
+## 準備：データの要約と分布の確認
 `mice`パッケージ内に含まれている`nhanes2`のデータを用いて演習します。  
 データの型によって適切な代入の方法が異なるため、まず`nhanes2`のデータの要約や分布を確認してみましょう。
-```{r}
+```r
 #1.Check the data distributions and pattern　　
 data <- nhanes2; attach(data); summary(data)
 par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age); plot(hyp)
 ```    
 
 `nhanes2`には、25名の年齢（age）、体重（bmi）、高血圧の有無（hyp）、コレステロール値（chl）の4つの変数が含まれています。また、ageは３つのカテゴリー変数、hypは２値のカテゴリー変数、bmiとchlは連続変数です。
-```
+```r
 #>    age          bmi          hyp          chl       
 #> 20-39:12   Min.   :20.40   no  :13   Min.   :113.0  
 #> 40-59: 7   1st Qu.:22.65   yes : 4   1st Qu.:185.0  
@@ -52,8 +52,9 @@ par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age); plot(hyp)
 次に、それぞれのデータの分布を確認します。例えば、代入方法の中には正規分布を前提とするものもあるため非常に歪んだデータがある場合は注意が必要です。  
 ![image](https://user-images.githubusercontent.com/82706937/173509244-0078e293-da4c-4023-968f-49ce60316fed.png)  
 
-その次に重要なのは、**それぞれの変数に欠損値がどのように発生しているか**を確認することです。欠損値の発生状況の確認には、`md.pattern`関数を使用します。  
-```{r}
+## 準備：欠測パターンの確認
+その次に重要なのは、**それぞれの変数に欠損値がどのように発生しているか**（欠測パターン）を確認することです。これには、`md.pattern`関数を使用します。  
+```r
 md.pattern(data)
 ```
 ![image](https://user-images.githubusercontent.com/82706937/173512297-39e5d84b-e133-49a5-8aa1-782f0cfb15a5.png)  
@@ -65,11 +66,15 @@ md.pattern(data)
 + **最後の行は、各変数の欠損値の数を示します**  
 例えば、各変数における欠損値は、ageには0個、hypには8個、bmiには9個、chlには10個、それぞれあることがわかります。なお、変数は左から欠損値の少ない順に並べられています。
 
-## ステップ１　代入
+![POINT](https://user-images.githubusercontent.com/82706937/173568537-dced2a6b-d924-4e41-827b-1c26743adc97.png)  
+**欠測値を代入する前に、「データの要約と分布」と「欠損値の発生パターン」を確認する**  
+***
+
+## 代入ステップ
 `mice`パッケージを用いた多重代入は、`mice()`による**代入**、`with()`による**分析**、`pool()`による分析結果の**統合**の３ステップに分けられます。まず、最初のステップの代入から説明します。そして、「代入がうまく行えたか」を図を用いて確認する方法も併せて説明します。  
 
 まず、最もシンプルなコードを用いて代入してみます。`mice()`のdataには、代入を行いたいデータセットを指定し、seed（シード値）は、再現性のある結果を得るために必要です。
-```{r}
+```r
 #2-1.Imputation with default setting (m=5)
 imp1 <- mice(data=data, seed = 1234)
 ```  
@@ -77,7 +82,7 @@ imp1 <- mice(data=data, seed = 1234)
 
 ## 図による代入結果の確認  
 代入ができたら上手く代入できたかをプロットして確認しましょう。代表的なプロットとしては、**収束プロット、密度プロット、散布図**があります。それぞれの図の見方を順番に説明します。
-```{r}
+```r
 #2-2.Plot 
 plot(imp1)
 densityplot(imp1)
@@ -99,7 +104,7 @@ stripplot(imp1, pch = 19, xlab = "Imputation number")
 
 ***
 
-## ステップ２　分析
+## 分析ステップ
 欠損値の代入ができたら、次は分析を行います。実行できる分析の種類は、ｔ検定から回帰分析まで様々ですが、ここでは回帰分析を用いて分析していきます。  
 
 # 応用編
