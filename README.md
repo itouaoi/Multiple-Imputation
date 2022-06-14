@@ -25,12 +25,11 @@ summary(res)
 
 ***
 
-![Multiple Imputation with mice (2)](https://user-images.githubusercontent.com/82706937/173539856-e36d1071-00c9-4bc6-a0ce-a13301975c6b.png)
-まず、シングルレベル
+# 基本編「シングルレベルの多重代入法」
 
 ## データの読み込みと分布の確認
 `mice`パッケージ内に含まれている`nhanes2`のデータを用いて演習します。  
-データの型によって適切な代入の方法が異なるため、まず`nhanes2`のデータの要約や分布を確認してみます。
+データの型によって適切な代入の方法が異なるため、まず`nhanes2`のデータの要約や分布を確認してみましょう。
 ```{r}
 #1.Check the data distributions and pattern　　
 data <- nhanes2; attach(data); summary(data)
@@ -102,7 +101,8 @@ stripplot(imp1, pch = 19, xlab = "Imputation number")
 ## ステップ２　分析
 欠損値の代入ができたら、次は分析を行います。実行できる分析の種類は、ｔ検定から回帰分析まで様々ですが、ここでは回帰分析を用いて分析していきます。  
 
-
+# 応用編
+作成中
 
 <b>参考文献</b> <br>
 Van Buuren, S. (2018) Flexible Imputation of Missing Data.
