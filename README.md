@@ -101,7 +101,7 @@ stripplot(imp1, pch = 19, xlab = "Imputation number")
 
 ### ３．ストリッププロット（Strip Plot） 
 ![image](https://user-images.githubusercontent.com/82706937/173524212-ad1872fa-fd72-4204-affb-fef3fdee9004.png)  
-`stripplot()`で作られるこの図は、**横軸を代入の回数(m)、縦軸を代入された値**とした図です。青い点は観測データ、赤い点は代入済みデータをそれぞれ示しています。
+`stripplot()`で作られるこの図は、**横軸を代入の回数(m)、縦軸を各変数の観測値と代入された値**とした図です。青い点は観測データ、赤い点は代入済みデータをそれぞれ示しています。
 
 ***
 
