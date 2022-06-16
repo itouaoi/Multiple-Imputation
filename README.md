@@ -204,7 +204,7 @@ mice(
 #4-1.Imputation with predictive mean matching
 require(mice); data <- nhanes2; attach(data)
 head(data)
-imp2 <- mice(data = data, seed = 1234, m=5, maxit=5, seed = 1234,
+imp2 <- mice(data = data, seed = 1234, m=5, maxit=5,
              method=c("", "pmm", "logreg", "pmm"))
 
 stripplot(imp2, pch = 19, xlab = "Imputation number
@@ -212,7 +212,7 @@ stripplot(imp2, pch = 19, xlab = "Imputation number
 
 
 #4-2.Imputation with Bayesian linear regression 
-imp3 <- mice(data = data, seed = 1234, m=5, maxit=5, seed = 1234,
+imp3 <- mice(data = data, seed = 1234, m=5, maxit=5,
              method=c("", "norm", "logreg", "norm"))
 
 stripplot(imp3, pch = 19, xlab = "Imputation number
@@ -222,7 +222,7 @@ stripplot(imp3, pch = 19, xlab = "Imputation number
 pmm（予測的平均マッチング）による代入  
 ![image](https://user-images.githubusercontent.com/82706937/173991396-362185ed-fef5-48a4-95fd-495090e73317.png)  
 
-pmmは、いろいろな型の変数に適用できる便利な方法です。どの代入値(赤点)も、観測値（青点）の分布している範囲内に収まっています。pmmは、回帰モデルによって求められた値と最も近い観測値を代入値とするため、変数内の観測値と異なる値が代入されることはありません。
+pmmは、いろいろな型の変数に適用できる便利な方法です。どの代入値（赤点）も、観測値（青点）の分布している範囲内に収まっています。pmmは、回帰モデルによって求められた値と最も近い観測値を代入値とするため、変数内の観測値と異なる値が代入されることはありません。
 
 norm（ベイズ線形回帰）による代入  
 ![Rplot](https://user-images.githubusercontent.com/82706937/173996575-3523d42e-0bf5-4767-952b-6edb0d4f1184.png)
