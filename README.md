@@ -19,9 +19,9 @@ library(mice); library(broom.mixed)
 
 ```r
 #Basic workflow with mice
-imp <- mice(nhanes)             #Imputation
+imp <- mice(nhanes)                   #Imputation
 fit <- with(imp, lm(chl ~ bmi + age)) #Analysis
-res <- pool(fit)                #Pooling
+res <- pool(fit)                      #Pooling
 summary(res)
 ```
 
@@ -237,7 +237,11 @@ imp$pred
 #> hyp   1   1   0   1
 #> chl   1   1   1   0
 ```
-`imp$pred`で、代入に用いられた予測変数を確認できます。例えば、以下の表の場合は、ageの代入に用いる予測変数としてsex, hyp, chlを用いることを意味しています。  
+オブジェクト名＋`$pred`で、代入に用いられた予測変数を確認できます。例えば、以下の表の場合は、ageの代入に用いる予測変数としてsex, hyp, chlを用いることを意味しています。  
+
+**どれくらい多くの変数を含める？**
+通常は、より多くの変数を予測変数として含めることによって、**最小のバイアスかつ最大の効率性をもった多重代入**が可能と報告されている（Meng, 1994; Collins et al., 2021）。また、多くの変数を予測変数を含めることによって、**MAR（ランダムな欠測）の仮定をより確かなものとする**上でも有用である（Van Buuren, S, 2018, p.167）。  
+しかしながら、このより多くの変数を含めるというテクニックは、20～30個の変数の場合では当てはまるかもしれないが、例えば100個といった**非常に多くの変数を含む場合は当てはまらない可能性もある。**
 
 #### maxit: インタラクションの回数
 代入ごとのインタラクションの回数。5~20回  
