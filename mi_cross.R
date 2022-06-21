@@ -2,21 +2,21 @@
 install.packages("mice")
 library(mice)
 
-# Basic workflow with mice
-imp <- mice(nhanes)                   #Imputation
-fit <- with(imp, lm(chl ~ bmi + age)) #Analysis
-res <- pool(fit)                      #Pooling
+# Basic 3 steps workflow
+imp <- mice(nhanes)                   #Step1 Imputation
+fit <- with(imp, lm(chl ~ bmi + age)) #Step2 Analysis
+res <- pool(fit)                      #Step3 Pooling
 res
 summary(res)
 
 ##################################### 1. Multiple Imputation single level ###################################
-# Check the data distributions and pattern
+# Preparations: Check the data distributions and patterns
 data <- nhanes2; attach(data); summary(data)
 par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age, main="age"); plot(hyp, main="hyp")
 par(mfrow = c(1,1));md.pattern(data)
 
 
-# 1-1.Imputation with default setting (m=5)
+# 1-1.Imputation with the default setting of mice (m=5)
 imp1 <- mice(data=data, seed = 1234)
 
 # 1-2.Plot 
