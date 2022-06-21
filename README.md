@@ -33,9 +33,9 @@ summary(res)
 `mice`パッケージ内に含まれている`nhanes2`のデータを用いて演習します。  
 `nhanes2`のデータを取り込んだら、まずデータの要約や分布を確認してみましょう。
 ```r
-#1.Check the data distributions and pattern　　
+#Check the data distributions and pattern
 data <- nhanes2; attach(data); summary(data)
-par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age); plot(hyp)
+par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age, main="age"); plot(hyp, main="hyp")
 ```    
 
 `nhanes2`には、25名の年齢（age）、体重（bmi）、高血圧の有無（hyp）、コレステロール値（chl）の4つの変数が含まれています。それぞれのデータの型は、ageは３つのカテゴリー変数、hypは２値のカテゴリー変数、bmiとchlは連続変数です。
@@ -78,15 +78,15 @@ md.pattern(data)
 
 `mice()`を使った代入は、以下のコードで実行できます。
 ```r
-#2-1.Imputation with default setting (m=5)
-imp1 <- mice(data = data, seed = 1234)
+#1-1.Imputation with default setting (m=5)
+imp1 <- mice(data=data, seed = 1234)
 ```  
 `mice()`のdataには、代入を行いたいデータセットを指定し、seed（シード値）は、再現性のある結果を得るために必要です。なお、ここではまだ必要最低限の引数しか指定していませんが、`mice()`はデフォルトの設定を自動的に適用し、代入を実行します。  
 
 ## 図による代入結果の確認  
 上記のコードを使って代入ができたら、**代入の結果をプロットして確認しましょう**。代表的なプロットとしては、**収束プロット、密度プロット、散布図**があります。それぞれの図の見方を簡単に説明します。
 ```r
-#2-2.Plot 
+#1-2.Plot 
 plot(imp1)
 densityplot(imp1)
 stripplot(imp1, pch = 19, xlab = "Imputation number")
@@ -110,7 +110,7 @@ stripplot(imp1, pch = 19, xlab = "Imputation number")
 ## 分析ステップ
 欠損値の代入ができたら、次は`with()`を使って分析を行います。分析ステップでは、ｍ組の疑似的な完全データを標準的な統計手法を用いてｍ回解析し、パラメータ推定値とその分散を得ます（阿部, 2016, p96）。用いることのできる統計手法は様々ですが、ここでは回帰分析を用いて分析していきます。  
 ```r
-#3. Analysis
+#2. Analysis
 fit1 <- with(imp1, lm(chl ~ bmi + age)) 
 ```
 
@@ -119,10 +119,8 @@ fit1 <- with(imp1, lm(chl ~ bmi + age))
 `summary()`を使って、最終的な解析結果の要約を確認することができます。
 
 ```r
-#Pooling the results
+#3. Pooling the results
 res1 <- pool(fit1)
-res1
-summary(res1)
 ```
 
 ```r
@@ -255,7 +253,8 @@ imp$pred
 
 デフォルトのpredを、csvファイルに変換する。  
 ```r
-pred <- imp$pred 
+#5-2. Make a original predictor matrix for big data set.
+pred <- imp$pred
 write.csv(pred, file = "test.csv")
 ```
 csvファイルを開き、各セルの値を編集します。  
