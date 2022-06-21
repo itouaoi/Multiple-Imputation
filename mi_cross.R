@@ -14,11 +14,11 @@ summary(res)
 # Preparations: Check the data distributions and patterns
 data <- nhanes2; attach(data); summary(data)
 par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age, main="age"); plot(hyp, main="hyp")
-par(mfrow = c(1,1));md.pattern(data)
+par(mfrow = c(1,1)); md.pattern(data)
 
 
 # 1-1.Imputation with the default setting of mice (m=5)
-imp1 <- mice(data=data, seed = 1234)
+imp1 <- mice(data = data, seed = 1234)
 
 # 1-2.Plot 
 plot(imp1)
@@ -38,7 +38,7 @@ summary(res1, "all", conf.int = TRUE)
 # 4-1.Imputation with predictive mean matching
 require(mice); data <- nhanes2; attach(data)
 head(data)
-imp2 <- mice(data = data, seed = 1234, m=5, maxit=5,
+imp2 <- mice(data = data, seed = 1234, m = 5, maxit = 5,
              method=c("", "pmm", "logreg", "pmm"))
 
 stripplot(imp2, pch = 19, xlab = "Imputation number
@@ -46,7 +46,7 @@ stripplot(imp2, pch = 19, xlab = "Imputation number
 
 
 # 4-2.Imputation with Bayesian linear regression 
-imp3 <- mice(data = data, seed = 1234, m=5, maxit=5,
+imp3 <- mice(data = data, seed = 1234, m = 5, maxit = 5,
              method=c("", "norm", "logreg", "norm"))
 
 stripplot(imp3, pch = 19, xlab = "Imputation number
