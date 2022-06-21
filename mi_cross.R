@@ -1,4 +1,5 @@
-# Multiple Imputation with mice 
+#####################################  Multiple Imputation with mice ######################################
+# Download the package
 install.packages("mice")
 library(mice)
 
@@ -9,7 +10,7 @@ res <- pool(fit)                      #Step3 Pooling
 res
 summary(res)
 
-##################################### 1. Multiple Imputation single level ###################################
+#####################################  Single Level Multiple Imputation ###################################
 # Preparations: Check the data distributions and patterns
 data <- nhanes2; attach(data); summary(data)
 par(mfrow = c(2,2)); hist(bmi); hist(chl); plot(age, main="age"); plot(hyp, main="hyp")
