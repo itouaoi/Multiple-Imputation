@@ -7,10 +7,10 @@
 + mi_cross: 基本編「シングルレベルの多重代入法」
 + ~~mi_long : 応用編「マルチレベルの多重代入法」~~(準備中)
 
-## パッケージのインストールと読み込み  
+## パッケージのインストールと呼び出し  
 ```r
-install.packages("mice"); install.packages("broom.mixed")
-library(mice); library(broom.mixed)
+install.packages("mice")
+library(mice)
 ```
 
 ## miceによる多重代入の最も基本的な流れ
