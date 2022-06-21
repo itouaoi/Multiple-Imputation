@@ -5,7 +5,7 @@
 ## コード一覧   
 ここで示すコードは、それぞれ以下のファイルにあります。  
 + mi_cross: 基本編「シングルレベルの多重代入法」
-+ mi_long : 応用編「マルチレベルの多重代入法」
++ mi_long : 応用編「マルチレベルの多重代入法」(準備中)
 
 ## パッケージのインストールと読み込み  
 ```r
@@ -18,10 +18,10 @@ library(mice); library(broom.mixed)
 しかし、データに含まれる変数の種類や分布の形によって適切な多重代入の方法が異なるため、**使用するデータに合わせてカスタマイズする必要があります。**  
 
 ```r
-#Basic workflow with mice
-imp <- mice(nhanes)                   #Imputation
-fit <- with(imp, lm(chl ~ bmi + age)) #Analysis
-res <- pool(fit)                      #Pooling
+# Basic 3 steps workflow
+imp <- mice(nhanes)                   #Step1 Imputation
+fit <- with(imp, lm(chl ~ bmi + age)) #Step2 Analysis
+res <- pool(fit)                      #Step3 Pooling
 summary(res)
 ```
 
